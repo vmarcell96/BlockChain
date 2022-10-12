@@ -1,9 +1,6 @@
-﻿using System;
-using System.Collections.Generic;
-using System.Linq;
+﻿
 using System.Security.Cryptography;
 using System.Text;
-using System.Threading.Tasks;
 
 namespace BlockChain
 {
@@ -22,7 +19,7 @@ namespace BlockChain
                 for (int i = 0; i < bytes.Length; i++)
                 {
                     // string is formatted in hexadecimal if argument is "x2"
-                    stringbuilder.Append(bytes[i].ToString());
+                    stringbuilder.Append(bytes[i].ToString("x2"));
                 }
                 return stringbuilder.ToString();
             }
