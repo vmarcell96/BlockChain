@@ -1,21 +1,14 @@
-﻿using System;
-using System.Collections;
-using System.Collections.Generic;
-using System.Linq;
-using System.Text;
-using System.Threading.Tasks;
-
-namespace BlockChain
+﻿namespace BlockChain
 {
     public class BlockChain
     {
         private readonly List<Block> _chain;
         private readonly int _difficulty;
 
-        public BlockChain()
+        public BlockChain(int difficulty)
         {
             _chain = new List<Block>() { CreateGenesisBlock() };
-            _difficulty = 2;
+            _difficulty = difficulty;
         }
 
         private Block CreateGenesisBlock()
@@ -25,20 +18,29 @@ namespace BlockChain
 
         public Block GetLatestBlock()
         {
-            DateTime latest = _chain.Max(b => b.TimeStamp);
-            return _chain.FirstOrDefault(b => b.TimeStamp == latest);
+            return _chain[_chain.Count-1];
         }
 
+        //Proof of work implementation
+        //Repeat hashing until the result hash's first [difficulty] character is "0";
         private void MineBlock(Block block)
         {
-            Console.WriteLine("Started mining");
+            Console.WriteLine($"Press any key to start mining Block: #{block.Id}");
+            Console.ReadKey();
             string zeros = String.Join("", new int[_difficulty]);
             while (block.Hash.Substring(0, _difficulty) != zeros)
             {
+                //changing the Nonce number creates an completely new hash
                 block.Nonce++;
                 block.Hash = block.CalculateHash();
+                Console.WriteLine(block.Hash);
+                System.Threading.Thread.Sleep(200);
             }
-            Console.WriteLine("Finished mining");
+            Console.WriteLine("");
+            Console.WriteLine($"Finished mining Block: #{block.Id}");
+            Console.WriteLine("Press any key to continue");
+            Console.ReadKey();
+            Console.Clear();
         }
 
         public void AddNewBlock(Block newBlock)
@@ -47,6 +49,11 @@ namespace BlockChain
             newBlock.Hash = newBlock.CalculateHash();
             MineBlock(newBlock);
             _chain.Add(newBlock);
+        }
+
+        public Block this[int index]
+        {
+            get => _chain[index];
         }
 
         public bool IsValidChain()
