@@ -7,7 +7,7 @@ namespace BlockChain
         {
             try
             {
-                var testCoin = new BlockChain(1);
+                var testCoin = new BlockChain(4);
                 Block testBlock1 = new Block(" Amount : 20 ");
                 Block testBlock2 = new Block(" Amount : 30 ");
                 testCoin.AddNewBlock(testBlock1);

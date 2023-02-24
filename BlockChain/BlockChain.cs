@@ -34,7 +34,7 @@
                 block.Nonce++;
                 block.Hash = block.CalculateHash();
                 Console.WriteLine(block.Hash);
-                System.Threading.Thread.Sleep(200);
+                //System.Threading.Thread.Sleep(200);
             }
             Console.WriteLine("");
             Console.WriteLine($"Finished mining Block: #{block.Id}");
